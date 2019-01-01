@@ -21,7 +21,7 @@ class Click_Map_Control:
 			print(datetime.datetime.now(), end= " ")
 			input("Fix issue then press enter to continue...")
 			result = Win32_API_Functions.set_always_on_top(self.window_name)
-		print(datetime.datetime.now(), "Set \"%s\" to always on top" % self.window_name)
+		print(datetime.datetime.now(), "Set \"{}\" to always on top".format(self.window_name))
 
 		return
 
@@ -59,7 +59,7 @@ class Click_Map_Control:
 		while w != self.width or h != self.height:
 			check_failed = True
 			print(datetime.datetime.now(), end= " ")
-			input("Don't change the size of the popout window! Reopen window and try again...")
+			input("Don't minimize or change the size of the popout window! Reopen/un-minimize window and try again...")
 			w, h = Win32_API_Functions.get_window_dim(self.window_name)
 
 		if check_failed:

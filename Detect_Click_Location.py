@@ -83,10 +83,15 @@ class Detect_Click_Location:
 			cv2.circle(image, (cX, cY), 3, (255, 0, 255), -1)	# Draw circle at the center of shape
 
 		# write the output image
-		curr_time = str(datetime.datetime.now())
-		filename = "click_maps/" + curr_time + " #" + str(self.map_number) + ".png"
-		cv2.imwrite(filename, image)
-		print(curr_time, "Saved processed click map:", filename)
+		curr_time = str(datetime.datetime.now()).replace(":", ".")		# Remove restricted characters from time stamp
+		filename = "click_maps/" + curr_time + " map" + str(self.map_number) + ".png"
+
+		success = cv2.imwrite(filename, image)
+		if success:
+			print(datetime.datetime.now(), "Saved processed click map:", filename)
+		else:
+			print(datetime.datetime.now(), "Failed to save processed click map", filename)
+
 		self.map_number += 1
 		return
 

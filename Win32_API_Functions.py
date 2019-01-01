@@ -24,12 +24,12 @@ def click(x,y):
 def set_always_on_top(window_name):
 	hwnd = get_window_handle(window_name)
 	if hwnd == None:
-		print(datetime.datetime.now(), "Failed to find \"%s\" window when setting as always on top!" % window_name)
+		print(datetime.datetime.now(), "Failed to find \"{}\" window when setting as always on top!".format(window_name))
 		return False
 
 	error = win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, -1, -1, -1, -1, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 	if error == 0:
-		print(datetime.datetime.now(), "Could not set windows \"%s\" to always on top!" % window_name)
+		print(datetime.datetime.now(), "Could not set windows \"{}\" to always on top!".format(window_name))
 		return False
 
 	return True
@@ -38,7 +38,7 @@ def set_always_on_top(window_name):
 def get_window_location(window_name):
 	hwnd = get_window_handle(window_name)	# Check if window exists
 	if hwnd == None:
-		print(datetime.datetime.now(), "Failed to find \"%s\" window when trying to get its coordinates!" % window_name)
+		print(datetime.datetime.now(), "Failed to find \"{}\" window when trying to get its coordinates!".format(window_name))
 		return (-1, -1)
 
 	# rect = win32gui.GetWindowRect(hwnd)     # CAN'T USE THIS!!!!
@@ -50,7 +50,7 @@ def get_window_location(window_name):
 	try:
 		getWinAttr = ctypes.windll.dwmapi.DwmGetWindowAttribute
 	except WindowsError:
-		print(datetime.datetime.now(), "Failed to get \"%s\" window coordinates!" % window_name)
+		print(datetime.datetime.now(), "Failed to get \"{}\" window coordinates!".format(window_name))
 		return (-1, -1)
 
 	win_rect = ctypes.wintypes.RECT()
@@ -61,7 +61,7 @@ def get_window_location(window_name):
 
 	# Make sure window is not minimized
 	if x < 0 or y < 0:
-		print(datetime.datetime.now(), "Window \"%s\" seems to be minimized. Un-minimize window!" % window_name)
+		print(datetime.datetime.now(), "Window \"{}\" seems to be minimized. Un-minimize window!".format(window_name))
 		return (1, -1)
 
 	return (x, y)
@@ -70,13 +70,13 @@ def get_window_location(window_name):
 def get_window_dim(window_name):
 	hwnd = get_window_handle(window_name)
 	if hwnd == None:
-		print(datetime.datetime.now(), "Failed to find \"%s\" window when trying to get its dimensions!" % window_name)
+		print(datetime.datetime.now(), "Failed to find \"{}\" window when trying to get its dimensions!".format(window_name))
 		return (-1, -1)
 
 	try:
 		getWinAttr = ctypes.windll.dwmapi.DwmGetWindowAttribute
 	except WindowsError:
-		print(datetime.datetime.now(), "Failed to get \"%s\" window dimensions!" % window_name)
+		print(datetime.datetime.now(), "Failed to get \"{}\" window dimensions!".format(window_name))
 		return (-1, -1)
 
 	win_rect = ctypes.wintypes.RECT()
@@ -84,5 +84,10 @@ def get_window_dim(window_name):
 	getWinAttr(ctypes.wintypes.HWND(hwnd), ctypes.wintypes.DWORD(dwmwa_extended_frame_bounds), ctypes.byref(win_rect), ctypes.sizeof(win_rect))
 	width = win_rect.right - win_rect.left
 	height =  win_rect.bottom - win_rect.top
+
+	# Make sure window is not minimized
+	if win_rect.left < 0 or win_rect.top < 0:
+		print(datetime.datetime.now(), "Window \"{}\" seems to be minimized. Un-minimize window!".format(window_name))
+		return (1, -1)
 
 	return (width, height)

@@ -12,15 +12,21 @@
 + Linux drivers for video recording/streaming glitch out!
 
 # Change Log
-## Version 0.2 (IN PROGRESS):
-+ Converting bot to new environment for better performance
+## Version 0.2:
++ Converted bot to new environment for better performance
 + Working on game compatibility
 ## Version 0.1:
 + Basic features of bot complete: winning click detection and clicking locations
 + Simple tests conducted: performance while streaming very poor
 
 # To Do:
++ Winning click not registering
 + Do real time test
++ Can you click on end game?
++ Message to leave click browser maximized in background
++ Make inputs also have date time
++ Catch interrupt to auto close browser
++ Make sure popout is above task bar
 + Create github repo (WITHOUT THE SECRET URL!!!!)
 + Block internet access to flash player
 + Automatically open, load, and maximize Flash player

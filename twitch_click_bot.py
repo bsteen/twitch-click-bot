@@ -30,7 +30,7 @@ def record_game_window_location():
 
 	GAME_WINDOW_X = x
 	GAME_WINDOW_Y = y
-	print(datetime.datetime.now(), "Recorded \"%s\" window location at: %d, %d" % FLASH_PLAYER_WINDOW, GAME_WINDOW_X, GAME_WINDOW_Y)
+	print(datetime.datetime.now(), "Recorded \"{}\" window location at: {}, {}".format(FLASH_PLAYER_WINDOW, GAME_WINDOW_X, GAME_WINDOW_Y))
 
 	return
 
@@ -61,7 +61,7 @@ def process_click_request(x, y):
 def	check_if_game_open():
 	hwnd = Win32_API_Functions.get_window_handle(FLASH_PLAYER_WINDOW)
 	if hwnd == None:
-		print(datetime.datetime.now(), "Could not find \"%s\" window!!!" % FLASH_PLAYER_WINDOW)
+		print(datetime.datetime.now(), "Could not find \"{}\" window!!!".format(FLASH_PLAYER_WINDOW))
 		input("Reopen game window, make fullscreen on same screen as before, then press enter...")
 		record_game_window_location()
 		check_if_game_open()
@@ -105,11 +105,12 @@ if __name__== "__main__":
 			sys.stdout.flush()
 			time.sleep(1)					# Sleep while the players vote
 		print()
+		sys.stdout.flush()
 
 		image_png_data = click_map_dl.download_click_map()    				# Get image from click map URL
 		x, y = find_click_loc.process_click_map(image_png_data, True)		# Proccess the click map; find winning click; log image
 		if x != -1 or y != -1:
-			print(datetime.datetime.now(), "Found winning click at: %d, %d" % x, y)
+			print(datetime.datetime.now(), "Found winning click at: {}, {}".format(x, y))
 			process_click_request(x, y)
 		else:
 			print(datetime.datetime.now(), "No winning click found!")
