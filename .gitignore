@@ -1,0 +1,6 @@
+__pycache__/
+click_map_url.txt
+*.exe
+*.log
+*.png
+*.swf
