@@ -5,12 +5,14 @@ import datetime
 import base64
 import Win32_API_Functions
 
+# Button coordinates for click map control popout are hardcoded, but they should work for every system
 class Click_Map_Control:
 	def __init__(self, one_vote, click_map_popout_name):
 		self.window_name = click_map_popout_name
 		self.width = 322			# constant value
 		self.height = 401			# constant value
 		self.one_vote = one_vote 	# Is a single player allow to vote more than once per round? Set by main module
+		self.set_popout_always_on_top()
 
 	# Try to set popout as always on top
 	# Function will stall program and try again until it succeeds
@@ -63,27 +65,34 @@ class Click_Map_Control:
 			w, h = Win32_API_Functions.get_window_dim(self.window_name)
 
 		if check_failed:
-			self.set_popout_always_on_top()
+			y_n = input("Does the click map need to be started? y/[n]:")
+			if y_n.find("y") != -1:
+				self.set_popout_always_on_top()
+				self.start_click_map()
 
 		return
 
 	# Should only need to be called once during the program
 	# Goes from main menu to starting first round of clicking by clicking buttons in pop out controller
 	def start_click_map(self):
-		self.set_popout_always_on_top()
 		self.verify_popout_integrity()		# Always verify integrity of popout before clicking
 		x, y = self.get_popout_location()
 
 		# Click buttons to start the Click map
 		Win32_API_Functions.click(x + 164, y + 176)	# Select "Click Map"
-		time.sleep(0.4)
+		time.sleep(0.4)		# Give enough time for click to register in the pop out interface
 
 		# Select check box to enable one vote per viewer
 		if self.one_vote:
 			Win32_API_Functions.click(x + 29, y + 115)
 			time.sleep(0.4)
+			print(datetime.datetime.now().now(), "Enabled one vote per viewer")
+		else:
+			print(datetime.datetime.now().now(), "Allowing multiple votes per viewer per round")
 
 		Win32_API_Functions.click(x + 162, y + 334)	# Select "Start Click Map"
+
+		print(datetime.datetime.now().now(), "Started click map")
 
 		return
 
@@ -94,10 +103,12 @@ class Click_Map_Control:
 		x, y = self.get_popout_location()
 
 		Win32_API_Functions.click(x + 161, y + 335)	# Select "Stop"
-		time.sleep(0.4)								# Give enough time for click to register
+		time.sleep(0.4)
 		Win32_API_Functions.click(x + 241, y + 335)	# Select "Close"
 		time.sleep(0.4)
 		Win32_API_Functions.click(x + 235, y + 335)	# Select "Restart"
+
+		print(datetime.datetime.now().now(), "Reset click map")
 
 		return
 
@@ -112,8 +123,11 @@ class Click_Map_Control:
 		time.sleep(0.4)
 		Win32_API_Functions.click(x + 89, y + 335)	# Select "Main Menu"
 
+		print(datetime.datetime.now().now(), "Stopped click map")
+
 		return
 
+# Uses the Firefox gecko driver, which you can download from here: https://github.com/mozilla/geckodriver/releases
 class Click_Map_Downloader:
 	def __init__(self, URL):
 		self.click_map_URL = URL
@@ -121,7 +135,7 @@ class Click_Map_Downloader:
 		cwd = os.getcwd()
 		os.environ["PATH"] += os.pathsep + cwd  # Set location of geckodriver binary to the current running folder
 
-		self.driver = webdriver.Firefox()    	# Start Firefox browser
+		self.driver = webdriver.Firefox()    	# Start Firefox browser; MUST CHANGE THIS IF YOU WANT TO USE THE CHROME DRIER
 		self.driver.maximize_window()			# Set size so click map scales correctly; fullscreen or not doesn't seem to matter
 		self.driver.get(self.click_map_URL)		# Navigate to click map url
 
@@ -133,8 +147,7 @@ class Click_Map_Downloader:
 	def close_browser(self):
 		self.driver.close()
 
-	# Gets click map image from browser, returns image data
-	# https://stackoverflow.com/a/38318578
+	# Gets click map image from browser, returns image data: https://stackoverflow.com/a/38318578
 	def download_click_map(self):
 		canvas = self.driver.find_element_by_css_selector("canvas")		# Find the canvas (image of click map)
 		canvas_base64 = self.driver.execute_script("return arguments[0].toDataURL('image/png').substring(21);", canvas)	# get the canvas as a PNG base64 string

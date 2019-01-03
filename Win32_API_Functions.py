@@ -1,9 +1,11 @@
 import ctypes
 from ctypes import wintypes		# WHY DO I NEED TO EXPLICITLY IMPORT WINTYPES FOR IT TO WORK?!?!?!
 import datetime
+import pyautogui
 import win32api
 import win32con
 import win32gui
+import time
 
 # Gets the Windows handle for a window, a.k.a: "hwnd"
 def get_window_handle(window_name):
@@ -14,10 +16,25 @@ def get_window_handle(window_name):
 		return hwnd
 
 # Move mouse to a location and left click
-def click(x,y):
+def click(x, y):
 	win32api.SetCursorPos((x,y))
-	win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
-	win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
+	time.sleep(0.1)		# Moving and clicking right away may be too fast for it to register?
+	win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
+	win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
+	time.sleep(0.1)
+	return
+
+# Just move the mouse cursor
+def move(x, y):
+	win32api.SetCursorPos((x,y))
+	return
+
+
+# Use built-in Windows function to draw circle around mouse location
+# Must be enabled in Windows settings: Mouse Properties > Pointer Options > "Show location of pointer when I press CTRL key"
+# I couldn't get the CTRL key to be detected with win32api.keybd_event(...); it would send they key to a window's context, but Windows didn't detect it
+def show_mouse_location():
+	pyautogui.press("ctrl")
 	return
 
 # Sets the given window so it is always on top of normal windows
