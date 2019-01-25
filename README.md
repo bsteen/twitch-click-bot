@@ -26,8 +26,8 @@
 + Simple tests conducted: performance while streaming very poor
 
 # To Do:
-+ Do real time test
 + Iterate version to 0.3
++ Add countdown to stream display
 + Make inputs also have date time
 + Message to leave click browser maximized in background
 + Catch interrupt to auto close browser
