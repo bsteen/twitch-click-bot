@@ -25,6 +25,7 @@
 
 # To Do:
 + Iterate version to 0.3
++ Reset click map after 2 no click rounds
 + Add countdown to stream display
 + Make inputs also have date time
 + Message to leave click browser maximized in background
