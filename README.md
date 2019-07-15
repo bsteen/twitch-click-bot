@@ -6,9 +6,9 @@ Using the [Smart Click Maps addon](https://twitch.exmachina.nl), [twitch.tv](htt
 # Notes
 + Library Dependencies: pywin32, pyautogui, opencv2, scipy, numpy, selenium, gecko driver (place binary in main folder)
 + Environment Dependencies: Windows 10, Python 3.x, OBS, Abode Flash Projector (v32), Firefox, Two monitors (1 real + 1 simulated or 2 real)
-+ This bot is a work in progress! Expect things to not work properly or at all. Expect frequent stream cutouts for hot fixing or scheduled downtime for new feature implementations.
++ This bot is a work in progress! Expect things to not work properly or at all.
 + This is just an experiment, and I don't expect interest for it to last long.
-+ I do not care if spaces are better than tabs! I use tabs in every other language, so I use tabs in Python.
++ I do not care if spaces are better than tabs! I use tabs in every other language, so I use tabs in Python!
 + Windows API is the worst API I have ever worked with (not even counting this project).
 + Linux drivers for video recording/streaming glitch out and make flashing artifacts appear on streams.
 + I already realize there are an infinite amount of better ways to create this bot.
