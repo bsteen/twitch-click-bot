@@ -3,7 +3,7 @@
 
 Using the [Smart Click Maps addon](https://twitch.exmachina.nl), [twitch.tv](https://twitch.tv) viewers can click to vote where a bot will click in-game. This uses OpenCV to interface between the click map and bot since there was no exisiting API to get exact click locations at the time.
 
-**(C) Benjamin Steenkamer, 2018 - 2020. See LICENSE file for usage details.**
+**© 2018 - 2020 Benjamin Steenkamer. See LICENSE file for usage details.**
 
 # Notes
 + Library Dependencies: pywin32, pyautogui, opencv2, scipy, numpy, selenium, gecko driver (place binary in main folder)
