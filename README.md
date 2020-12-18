@@ -34,7 +34,6 @@ Using the [Smart Click Maps addon](https://twitch.exmachina.nl), [twitch.tv](htt
 + Message to leave click browser maximized in background
 + Catch interrupt to auto close browser
 + Make sure popout is above task bar
-+ Create github repo (WITHOUT THE SECRET URL!!!!)
 + Block internet access to flash player
 + Automatically open, load, and maximize Flash player
 + Exit option while sleeping
